@@ -9,11 +9,11 @@
     "type": "git",
     "url": "https://github.com/LLK/scratch-blocks.git"
   },
-  "main": "./dist/vertical.js",
+  "main": "./vertical.js",
   "browser": "./shim/vertical.js",
   "scripts": {
     "deploy": "rimraf gh-pages/closure-library/scripts/ci/CloseAdobeDialog.exe && gh-pages -t -d gh-pages -m \"Build for $(git log --pretty=format:%H -n1)\"",
-    "prepublish": "python build.py && webpack",
+    "prepare2": "python build.py && webpack",
     "test:unit": "node tests/jsunit/test_runner.js",
     "test:lint": "eslint .",
     "test:messages": "npm run translate && node i18n/test_scratch_msgs.js",
@@ -36,7 +36,7 @@
     "event-stream": "3.3.4",
     "gh-pages": "0.12.0",
     "glob": "7.1.2",
-    "google-closure-compiler": "20180402.0.0",
+    "google-closure-compiler": "^20180402.0.0",
     "google-closure-library": "20180204.0.0",
     "graceful-fs": "4.1.11",
     "json": "9.0.4",
