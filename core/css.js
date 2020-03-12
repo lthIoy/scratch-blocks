@@ -1329,17 +1329,17 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.scratchCategoryItemBubble {',
-    'width: 1.25rem;',
-    'height: 1.25rem;',
+    'width: 1rem;',
+    'height: 1rem;',
     'border: 1px solid;',
     'border-radius: 100%;',
-    'margin: 0 auto 0.125rem;',
+    'margin: 0 auto 0.1rem;',
   '}',
 
   '.scratchCategoryItemIcon {',
-    'width: 1.25rem;',
-    'height: 1.25rem;',
-    'margin: 0 auto 0.125rem;',
+    'width: 1rem;',
+    'height: 1rem;',
+    'margin: 0 auto 0.1rem;',
     'background-size: 100%;',
   '}',
 

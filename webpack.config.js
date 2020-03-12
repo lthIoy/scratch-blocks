@@ -8,62 +8,63 @@ var path = require('path');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = [{
-  stats: "errors-only",
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: {
-    horizontal: './shim/horizontal.js',
-    vertical: './shim/vertical.js'
+    stats: "errors-only",
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    entry: {
+      horizontal: './shim/horizontal.js',
+      vertical: './shim/vertical.js'
+    },
+    output: {
+      library: 'ScratchBlocks',
+      libraryTarget: 'commonjs2',
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].js'
+    },
+    optimization: {
+      minimize: false
+    },
+    performance: {
+      hints: false
+    }
+  }, {
+    stats: "errors-only",
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    entry: {
+      horizontal: './shim/horizontal.js',
+      vertical: './shim/vertical.js'
+    },
+    output: {
+      library: 'Blockly',
+      libraryTarget: 'umd',
+      path: path.resolve(__dirname, 'dist', 'web'),
+      filename: '[name].js'
+    },
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            mangle: false
+          }
+        })
+      ]
+    },
+    plugins: []
   },
-  output: {
-    library: 'ScratchBlocks',
-    libraryTarget: 'commonjs2',
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
-  },
-  optimization: {
-    minimize: false
-  },
-  performance: {
-    hints: false
-  }
-}, {
-  stats: "errors-only",
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: {
-    horizontal: './shim/horizontal.js',
-    vertical: './shim/vertical.js'
-  },
-  output: {
-    library: 'Blockly',
-    libraryTarget: 'umd',
-    path: path.resolve(__dirname, 'dist', 'web'),
-    filename: '[name].js'
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          mangle: false
-        }
-      })
-    ]
-  },
-  plugins: []
-},
-{ stats: "errors-only",
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  entry: './shim/gh-pages.js',
-  output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'gh-pages')
-  },
-  optimization: {
-    minimize: false
-  },
-  performance: {
-    hints: false
-  },
-  plugins: [
+  {
+    stats: "errors-only",
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    entry: './shim/gh-pages.js',
+    output: {
+      filename: '[name].js',
+      path: path.resolve(__dirname, 'gh-pages')
+    },
+    optimization: {
+      minimize: false
+    },
+    performance: {
+      hints: false
+    },
+    plugins: [
       new CopyWebpackPlugin([{
         from: 'node_modules/google-closure-library',
         to: 'closure-library'
@@ -93,5 +94,6 @@ module.exports = [{
         ignore: 'webpack.config.js',
         to: 'playgrounds'
       }])
-  ]
-}];
+    ]
+  }
+];

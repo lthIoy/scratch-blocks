@@ -199,7 +199,6 @@ Blockly.BlockDragger.prototype.startBlockDrag = function(currentDragDeltaXY) {
 Blockly.BlockDragger.prototype.dragBlock = function(e, currentDragDeltaXY) {
   var delta = this.pixelsToWorkspaceUnits_(currentDragDeltaXY);
   var newLoc = goog.math.Coordinate.sum(this.startXY_, delta);
-
   this.draggingBlock_.moveDuringDrag(newLoc);
   this.dragIcons_(delta);
 

@@ -272,6 +272,7 @@ Blockly.createDom_ = function(container, options) {
  * @return {!Blockly.Workspace} Newly created main workspace.
  * @private
  */
+ 
 Blockly.createMainWorkspace_ = function(svg, options, blockDragSurface, workspaceDragSurface) {
   options.parentWorkspace = null;
   var mainWorkspace = new Blockly.WorkspaceSvg(options, blockDragSurface, workspaceDragSurface);
@@ -283,7 +284,6 @@ Blockly.createMainWorkspace_ = function(svg, options, blockDragSurface, workspac
     var flyout = mainWorkspace.addFlyout_('svg');
     Blockly.utils.insertAfter(flyout, svg);
   }
-
   // A null translation will also apply the correct initial scale.
   mainWorkspace.translate(0, 0);
   Blockly.mainWorkspace = mainWorkspace;
@@ -367,6 +367,17 @@ Blockly.init_ = function(mainWorkspace) {
         Blockly.hideChaffOnResize(true);
         Blockly.svgResize(mainWorkspace);
       });
+
+  if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+    var workspaceOrientationchangeHandler=Blockly.bindEventWithChecks_(window, 'orientationchange',
+      null,
+      function() {
+        Blockly.hideChaffOnResize(true);
+        Blockly.svgResize(mainWorkspace);
+      });
+  }
+  
+
   mainWorkspace.setResizeHandlerWrapper(workspaceResizeHandler);
 
   Blockly.inject.bindDocumentEvents_();

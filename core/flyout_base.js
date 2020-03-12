@@ -462,16 +462,17 @@ Blockly.Flyout.prototype.hide = function() {
 };
 
 /**
- * Show and populate the flyout.
+ * populate the flyout.
  * @param {!Array|string} xmlList List of blocks to show.
  *     Variables and procedures have a custom set of blocks.
  */
-Blockly.Flyout.prototype.show = function(xmlList) {
+Blockly.Flyout.prototype.show = function(xmlList,isShow) {
   this.workspace_.setResizesEnabled(false);
   this.hide();
   this.clearOldBlocks_();
-
-  this.setVisible(true);
+  if(!isShow){
+    this.setVisible(true);
+  }
   // Create the blocks to be shown in this flyout.
   var contents = [];
   var gaps = [];
@@ -823,6 +824,7 @@ Blockly.Flyout.prototype.createBlock = function(originalBlock) {
   }
   if (this.autoClose) {
     this.hide();
+    this.targetWorkspace_.setResizesEnabled(true);
   }
   return newBlock;
 };

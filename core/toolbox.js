@@ -170,6 +170,7 @@ Blockly.Toolbox.prototype.createFlyout_ = function() {
   } else {
     this.flyout_ = new Blockly.VerticalFlyout(options);
   }
+  this.flyout_.autoClose = true;
   this.flyout_.setParentToolbox(this);
 
   goog.dom.insertSiblingAfter(
@@ -192,7 +193,7 @@ Blockly.Toolbox.prototype.populate_ = function(newTree) {
  * Show all blocks for all categories in the flyout
  * @private
  */
-Blockly.Toolbox.prototype.showAll_ = function() {
+Blockly.Toolbox.prototype.showAll_ = function(notInited) {
   var allContents = [];
   for (var i = 0; i < this.categoryMenu_.categories_.length; i++) {
     var category = this.categoryMenu_.categories_[i];
@@ -211,6 +212,7 @@ Blockly.Toolbox.prototype.showAll_ = function() {
     allContents = allContents.concat(category.getContents());
   }
   this.flyout_.show(allContents);
+  if(!notInited){this.flyout_.hide();}//初始化不展开flyout
 };
 
 /**
@@ -218,6 +220,9 @@ Blockly.Toolbox.prototype.showAll_ = function() {
  * @return {number} The width of the toolbox.
  */
 Blockly.Toolbox.prototype.getWidth = function() {
+  if (this.flyout_ && !this.flyout_.isVisible_) {
+    return this.HtmlDiv.clientWidth;
+  }
   return this.width;
 };
 
@@ -485,6 +490,7 @@ Blockly.Toolbox.prototype.scrollToCategoryByName = function(name) {
   var scrollPositions = this.flyout_.categoryScrollPositions;
   for (var i = 0; i < scrollPositions.length; i++) {
     if (name === scrollPositions[i].categoryName) {
+      this.showAll_(true);
       this.flyout_.setVisible(true);
       this.flyout_.scrollTo(scrollPositions[i].position);
       return;
@@ -501,6 +507,7 @@ Blockly.Toolbox.prototype.scrollToCategoryById = function(id) {
   var scrollPositions = this.flyout_.categoryScrollPositions;
   for (var i = 0; i < scrollPositions.length; i++) {
     if (id === scrollPositions[i].categoryId) {
+      this.showAll_(true);
       this.flyout_.setVisible(true);
       this.flyout_.scrollTo(scrollPositions[i].position);
       return;
@@ -560,7 +567,7 @@ Blockly.Toolbox.prototype.setSelectedItemFactory = function(item) {
   var selectedItem = item;
   return function() {
     if (!this.workspace_.isDragging()) {
-      this.setSelectedItem(selectedItem);
+      this.setSelectedItem(selectedItem,true);
       Blockly.Touch.clearTouchIdentifier();
     }
   };

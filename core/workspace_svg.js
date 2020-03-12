@@ -614,8 +614,7 @@ Blockly.WorkspaceSvg.prototype.addFlyout_ = function(tagName) {
   } else {
     this.flyout_ = new Blockly.VerticalFlyout(workspaceOptions);
   }
-  this.flyout_.autoClose = false;
-
+  this.flyout_.autoClose = true;
   // Return the element  so that callers can place it in their desired
   // spot in the DOM.  For example, mutator flyouts do not go in the same place
   // as main workspace flyouts.
@@ -1572,7 +1571,8 @@ Blockly.WorkspaceSvg.prototype.updateToolbox = function(tree) {
       throw 'Existing toolbox has categories.  Can\'t change mode.';
     }
     this.options.languageTree = tree;
-    this.flyout_.show(tree.childNodes);
+    //this.flyout_.show(tree.childNodes);
+    this.flyout_.show(tree.childNodes,true);
   }
 };
 
@@ -1983,7 +1983,6 @@ Blockly.WorkspaceSvg.getTopLevelWorkspaceMetrics_ = function() {
       Blockly.WorkspaceSvg.getDimensionsPx_(this.toolbox_);
   var flyoutDimensions =
       Blockly.WorkspaceSvg.getDimensionsPx_(this.flyout_);
-
   // Contains height and width in CSS pixels.
   // svgSize is equivalent to the size of the injectionDiv at this point.
   var svgSize = Blockly.svgSize(this.getParentSvg());
